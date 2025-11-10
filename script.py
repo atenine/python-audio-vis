@@ -113,9 +113,6 @@ def generate_frames(path):
         plt.plot(freqs, mags, color='white')
         plt.xlabel('Frequency (Hz)')
         plt.ylabel('Magnitude')
-        t_start = i / sr
-        t_end = (i + len(frame)) / sr
-        plt.title(f"{Path(path).name} — {t_start:.2f}s to {t_end:.2f}s")
         plt.ylim(0, 160)
         plt.xlim(0, 10000)
         plt.grid(True, color='gray', alpha=0.3)
