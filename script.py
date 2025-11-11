@@ -18,8 +18,16 @@ import matplotlib.pyplot as plt
 
 
 def __main__():
-    clips = [f for f in listdir("sentences/clips/")]
-    df = pd.read_csv("sentences/transc.csv")
+    # for sentences
+    # base_path = "sentences/"
+    # clips = [f for f in listdir(base_path + "clips/")]
+    # df = pd.read_csv(base_path + "transc.csv")
+    # items = [': '.join(row[0:2]) for row in df.values]
+
+    # for words
+    base_path = "words/"
+    clips = [f for f in listdir(base_path + "clips/")]
+    df = pd.read_csv(base_path + "transc.csv")
     items = [': '.join(row[0:2]) for row in df.values]
 
     root = tk.Tk()
@@ -32,7 +40,7 @@ def __main__():
 
     tk.Button(root,
               text="Render",
-              command=lambda: on_play_button_click("sentences/clips/" + clips[cmb.current()],
+              command=lambda: on_play_button_click(base_path + "clips/" + clips[cmb.current()],
                                                    items[cmb.current()])
               ).pack(pady=10)
     tk.Button(root, text="Done", command=root.destroy).pack(pady=5)
@@ -118,6 +126,9 @@ def generate_frames(path):
         plt.grid(True, color='gray', alpha=0.3)
         plt.savefig(f"output/frames/spectrogram_frame_{i//int(sr/60):04d}.png", dpi=150, facecolor=plt.gcf().get_facecolor(), bbox_inches='tight')
         print("Saved frame " + str(i//int(sr/60)) + " of " + str(len(y)//int(sr/60)))
+    
+    plt.close()
+    return
 
 def generate_video(path):
     """ generates a video from the saved .png frames"""
@@ -147,7 +158,7 @@ def generate_video(path):
 
     # Use ffmpeg to combine video and audio
     cmd = f'ffmpeg -i {video_path} -i {audio_path} -c:v copy -c:a aac {output_path} -y'
-    subprocess.run(cmd, shell=True, check=True)
+    return subprocess.run(cmd, shell=True, check=True)
 
 def play_audio(path):
     """ plays the passed audio file"""
