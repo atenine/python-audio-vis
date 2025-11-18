@@ -68,7 +68,7 @@ def generate_spectrogram(path, name):
 
     plt.figure(figsize=(10, 5))
     S_dB = librosa.power_to_db(S, ref=np.max)
-    librosa.display.specshow(S_dB, sr=sr, fmax=10000, x_axis='time', y_axis='mel')
+    librosa.display.specshow(S_dB, sr=sr, fmax=10000, hop_length=64, x_axis='time', y_axis='mel')
     # plt.colorbar(format='%+2.0f dB')
     plt.title(name)
     fig = plt.gcf()
