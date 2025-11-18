@@ -60,16 +60,16 @@ def on_play_button_click(path, name):
 
 
 def generate_spectrogram(path, name):
-    """ draws and saves spectrogram"""
+    """ draws and saves spectrogram """
     y, sr = librosa.load(path)
-    S = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128, fmax=10000)
+    S = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=256, hop_length=64, fmax=10000)
 
-    plt.ioff()
+    # plt.ioff()
 
     plt.figure(figsize=(10, 5))
     S_dB = librosa.power_to_db(S, ref=np.max)
     librosa.display.specshow(S_dB, sr=sr, fmax=10000, x_axis='time', y_axis='mel')
-    plt.colorbar(format='%+2.0f dB')
+    # plt.colorbar(format='%+2.0f dB')
     plt.title(name)
     fig = plt.gcf()
     fig.patch.set_facecolor('black')
